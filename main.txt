@@ -1,0 +1,44 @@
+package com.example.mywearos;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.wear.widget.CircularProgressLayout;
+
+import com.example.mywearos.databinding.ActivityMainBinding;
+
+public class MainActivity extends Activity implements CircularProgressLayout.OnTimerFinishedListener{
+
+    private CircularProgressLayout cpl;
+    private ActivityMainBinding binding;
+    private TextView tv1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        tv1=findViewById(R.id.tv1);
+        cpl=(CircularProgressLayout)findViewById(R.id.delayed_confirm);
+        cpl.setOnTimerFinishedListener(this);
+        cpl.setTotalTime(5000);
+        cpl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // if(v.equals(cpl))
+               // {
+
+                    cpl.startTimer();
+                //}
+            }
+        });
+    }
+
+    @Override
+    public void onTimerFinished(CircularProgressLayout layout) {
+        tv1.setText("Done");
+        cpl.setColorSchemeColors(Color.parseColor("#3DDC84"));
+    }
+}
